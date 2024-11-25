@@ -34,13 +34,13 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: '*', language: 'ardunio-ml' }]
+        documentSelector: [{ scheme: '*', language: 'arduino-ml' }]
     };
 
     // Create the language client and start the client.
     const client = new LanguageClient(
-        'ardunio-ml',
-        'Ardunio ML',
+        'arduino-ml',
+        'ArduinoMl',
         serverOptions,
         clientOptions
     );

@@ -4,19 +4,19 @@ import { configureWorker, defineUserServices } from './setupCommon.js';
 export const setupConfigExtended = (): UserConfig => {
     const extensionFilesOrContents = new Map();
     extensionFilesOrContents.set('/language-configuration.json', new URL('../language-configuration.json', import.meta.url));
-    extensionFilesOrContents.set('/ardunio-ml-grammar.json', new URL('../syntaxes/ardunio-ml.tmLanguage.json', import.meta.url));
+    extensionFilesOrContents.set('/arduino-ml-grammar.json', new URL('../syntaxes/arduino-ml.tmLanguage.json', import.meta.url));
 
     return {
         wrapperConfig: {
             serviceConfig: defineUserServices(),
             editorAppConfig: {
                 $type: 'extended',
-                languageId: 'ardunio-ml',
-                code: `// Ardunio ML is running in the web!`,
+                languageId: 'arduino-ml',
+                code: `// ArduinoMl is running in the web!`,
                 useDiffEditor: false,
                 extensions: [{
                     config: {
-                        name: 'ardunio-ml-web',
+                        name: 'arduino-ml-web',
                         publisher: 'generator-langium',
                         version: '1.0.0',
                         engines: {
@@ -24,16 +24,16 @@ export const setupConfigExtended = (): UserConfig => {
                         },
                         contributes: {
                             languages: [{
-                                id: 'ardunio-ml',
+                                id: 'arduino-ml',
                                 extensions: [
-                                    '.ardunio-ml'
+                                    '.arduino-ml'
                                 ],
                                 configuration: './language-configuration.json'
                             }],
                             grammars: [{
-                                language: 'ardunio-ml',
-                                scopeName: 'source.ardunio-ml',
-                                path: './ardunio-ml-grammar.json'
+                                language: 'arduino-ml',
+                                scopeName: 'source.arduino-ml',
+                                path: './arduino-ml-grammar.json'
                             }]
                         }
                     },

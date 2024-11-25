@@ -1,14 +1,14 @@
 {
-    "projectName": "ArdunioMl",
+    "projectName": "ArduinoMl",
     "languages": [{
-        "id": "ardunio-ml",
-        "grammar": "src/language/ardunio-ml.langium",
+        "id": "arduino-ml",
+        "grammar": "src/language/arduino-ml.langium",
         "fileExtensions": [".arduinoml"],
         "textMate": {
-            "out": "syntaxes/ardunio-ml.tmLanguage.json"
+            "out": "syntaxes/arduino-ml.tmLanguage.json"
         },
         "monarch": {
-            "out": "src/syntaxes/ardunio-ml.monarch.ts"
+            "out": "src/syntaxes/arduino-ml.monarch.ts"
         }
     }],
     "out": "src/language/generated"

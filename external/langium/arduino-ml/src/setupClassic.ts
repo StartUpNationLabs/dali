@@ -1,6 +1,6 @@
 import { MonacoEditorLanguageClientWrapper, UserConfig } from 'monaco-editor-wrapper';
 import { configureWorker, defineUserServices } from './setupCommon.js';
-import monarchSyntax from "./syntaxes/ardunio-ml.monarch.js";
+import monarchSyntax from "./syntaxes/arduino-ml.monarch.js";
 
 export const setupConfigClassic = (): UserConfig => {
     return {
@@ -8,8 +8,8 @@ export const setupConfigClassic = (): UserConfig => {
             serviceConfig: defineUserServices(),
             editorAppConfig: {
                 $type: 'classic',
-                languageId: 'ardunio-ml',
-                code: `// Ardunio ML is running in the web!`,
+                languageId: 'arduino-ml',
+                code: `// ArduinoMl is running in the web!`,
                 useDiffEditor: false,
                 languageExtensionConfig: { id: 'langium' },
                 languageDef: monarchSyntax,

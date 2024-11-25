@@ -65,10 +65,10 @@
     "contributes": {
         "languages": [
             {
-                "id": "ardunio-ml",
+                "id": "arduino-ml",
                 "aliases": [
-                    "Ardunio ML",
-                    "ardunio-ml"
+                    "ArduinoMl",
+                    "arduino-ml"
                 ],
                 "extensions": [".arduinoml"],
                 "configuration": "./language-configuration.json"
@@ -76,17 +76,17 @@
         ],
         "grammars": [
             {
-                "language": "ardunio-ml",
-                "scopeName": "source.ardunio-ml",
-                "path": "syntaxes/ardunio-ml.tmLanguage.json"
+                "language": "arduino-ml",
+                "scopeName": "source.arduino-ml",
+                "path": "syntaxes/arduino-ml.tmLanguage.json"
             }
         ]
     },
     "activationEvents": [
-        "onLanguage:ardunio-ml"
+        "onLanguage:arduino-ml"
     ],
     "main": "./out/extension/main.cjs",
     "bin": {
-        "ardunio-ml-cli": "./bin/cli.js"
+        "arduino-ml-cli": "./bin/cli.js"
     }
 }
