@@ -1,13 +1,13 @@
 import { startLanguageServer } from 'langium/lsp';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';
-import { createArdunioMlServices } from './ardunio-ml-module.js';
+import { createArduinoMlServices } from './arduino-ml-module.js';
 
 // Create a connection to the client
 const connection = createConnection(ProposedFeatures.all);
 
 // Inject the shared services and language-specific services
-const { shared } = createArdunioMlServices({ connection, ...NodeFileSystem });
+const { shared } = createArduinoMlServices({ connection, ...NodeFileSystem });
 
 // Start the language server with the shared services
 startLanguageServer(shared);

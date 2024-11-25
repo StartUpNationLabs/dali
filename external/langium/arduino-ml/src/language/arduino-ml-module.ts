@@ -1,14 +1,14 @@
 import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
-import { ArdunioMlGeneratedModule, ArdunioMlGeneratedSharedModule } from './generated/module.js';
-import { ArdunioMlValidator, registerValidationChecks } from './ardunio-ml-validator.js';
+import { ArduinoMlGeneratedModule, ArduinoMlGeneratedSharedModule } from './generated/module.js';
+import { ArduinoMlValidator } from './arduino-ml-validator.js';
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
-export type ArdunioMlAddedServices = {
+export type ArduinoMlAddedServices = {
     validation: {
-        ArdunioMlValidator: ArdunioMlValidator
+        ArduinoMlValidator: ArduinoMlValidator
     }
 }
 
@@ -16,16 +16,16 @@ export type ArdunioMlAddedServices = {
  * Union of Langium default services and your custom services - use this as constructor parameter
  * of custom service classes.
  */
-export type ArdunioMlServices = LangiumServices & ArdunioMlAddedServices
+export type ArduinoMlServices = LangiumServices & ArduinoMlAddedServices
 
 /**
  * Dependency injection module that overrides Langium default services and contributes the
  * declared custom services. The Langium defaults can be partially specified to override only
  * selected services, while the custom services must be fully specified.
  */
-export const ArdunioMlModule: Module<ArdunioMlServices, PartialLangiumServices & ArdunioMlAddedServices> = {
+export const ArduinoMlModule: Module<ArduinoMlServices, PartialLangiumServices & ArduinoMlAddedServices> = {
     validation: {
-        ArdunioMlValidator: () => new ArdunioMlValidator()
+        ArduinoMlValidator: () => new ArduinoMlValidator()
     }
 };
 
@@ -44,25 +44,24 @@ export const ArdunioMlModule: Module<ArdunioMlServices, PartialLangiumServices &
  * @param context Optional module context with the LSP connection
  * @returns An object wrapping the shared services and the language-specific services
  */
-export function createArdunioMlServices(context: DefaultSharedModuleContext): {
+export function createArduinoMlServices(context: DefaultSharedModuleContext): {
     shared: LangiumSharedServices,
-    ArdunioMl: ArdunioMlServices
+    ArduinoMl: ArduinoMlServices
 } {
     const shared = inject(
         createDefaultSharedModule(context),
-        ArdunioMlGeneratedSharedModule
+        ArduinoMlGeneratedSharedModule
     );
-    const ArdunioMl = inject(
+    const ArduinoMl = inject(
         createDefaultModule({ shared }),
-        ArdunioMlGeneratedModule,
-        ArdunioMlModule
+        ArduinoMlGeneratedModule,
+        ArduinoMlModule
     );
-    shared.ServiceRegistry.register(ArdunioMl);
-    registerValidationChecks(ArdunioMl);
+    shared.ServiceRegistry.register(ArduinoMl);
     if (!context.connection) {
         // We don't run inside a language server
         // Therefore, initialize the configuration provider instantly
         shared.workspace.ConfigurationProvider.initialized({});
     }
-    return { shared, ArdunioMl };
+    return { shared, ArduinoMl };
 }
