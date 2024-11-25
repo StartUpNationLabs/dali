@@ -1,0 +1,15 @@
+{
+    "projectName": "ArdunioMl",
+    "languages": [{
+        "id": "ardunio-ml",
+        "grammar": "src/language/ardunio-ml.langium",
+        "fileExtensions": [".arduinoml"],
+        "textMate": {
+            "out": "syntaxes/ardunio-ml.tmLanguage.json"
+        },
+        "monarch": {
+            "out": "src/syntaxes/ardunio-ml.monarch.ts"
+        }
+    }],
+    "out": "src/language/generated"
+}
