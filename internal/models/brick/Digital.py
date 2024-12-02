@@ -1,4 +1,4 @@
-from Actuator import Actuator
+from .Actuator import Actuator
 
 class Digital(Actuator):
     def __init__(self, name: str, pin: int):

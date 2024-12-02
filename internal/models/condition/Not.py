@@ -1,5 +1,5 @@
 from Condition import Condition
-from ..Signal import Signal
+from internal.models.Signal import Signal
 
 class NotCondition(Condition):
     def __init__(self, value: Signal):
@@ -9,3 +9,6 @@ class NotCondition(Condition):
             self.value = Signal.LOW
         else :
             self.value = Signal.HIGH
+
+    def evaluate(self) :
+        return self.value

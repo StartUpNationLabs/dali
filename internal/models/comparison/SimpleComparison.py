@@ -1,4 +1,4 @@
-from Comparison import Comparison
+from .Comparison import Comparison
 from ..brick.Sensor import Sensor
 from ..Signal import Signal
 

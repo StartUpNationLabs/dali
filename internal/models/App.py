@@ -1,6 +1,7 @@
-from NamedElement import NamedElement
-from State import State
-from brick.Brick import Brick
+from .NamedElement import NamedElement
+from .State import State
+from .brick.Brick import Brick
+
 
 class App(NamedElement):
     def __init__(self, name: str, initialState: State, states: list[State], bricks :list[Brick] = None):
@@ -13,3 +14,19 @@ class App(NamedElement):
             self.bricks = []
         else :
             self.bricks = bricks
+    
+    def __str__(self) -> str:
+        return f"""
+        {''.join([brick.globalVariable() + "\n" for brick in self.bricks]).rstrip()}
+
+        void setup(){{
+            Serial.begin(9600);
+            {''.join([str(brick) + "\n" for brick in self.bricks]).rstrip()}
+        }}
+
+        void loop(){{
+            {self.initialState.generateCall()}
+        }}
+        
+        {''.join([str(state) + "\n" for state in self.states]).rstrip()}
+    """

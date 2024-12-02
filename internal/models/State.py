@@ -1,9 +1,7 @@
-from NamedElement import NamedElement
-from Transition import Transition
-from action.Action import Action
+from .NamedElement import NamedElement
 
 class State(NamedElement):
-    def __init__(self, name:str, transitions : list[Transition] = None, actions : list[Action] = None):
+    def __init__(self, name:str, transitions = None, actions = None):
         super().__init__(name)
         
         if (transitions == None) :
@@ -15,3 +13,13 @@ class State(NamedElement):
             self.actions = []
         else :
             self.actions = actions
+    
+    def generateCall(self) :
+        return f'{self.name}();'
+
+    def __str__(self) -> str :
+        return f"""
+        void {self.name}(){{
+          {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
+        }}
+        """

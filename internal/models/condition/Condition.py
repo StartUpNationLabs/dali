@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from ..Signal import Signal
+from internal.models.Signal import Signal
 
 class Condition():
     def __init__(self) :
