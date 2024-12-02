@@ -16,8 +16,10 @@ void state0() {
   do{
     delay(20);
     buttonState = digitalRead(button);
-  }while(buttonState == LOW);
-  state1();
+    if(buttonState == LOW){
+      state1();
+    }
+  }while(true);
 }
 
 void state1() {

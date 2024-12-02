@@ -23,6 +23,8 @@ void loop() {
     digitalWrite(4, LOW);
     if ((digitalRead(1) == HIGH and digitalRead(2) == LOW)) {
       currentState = Alert;
+      lastmotionSensor = digitalRead(1);
+      lastlightSensor = digitalRead(2);
     }
   }
   if (currentState == Alert) {
@@ -32,9 +34,13 @@ void loop() {
     delay(123);
     if ((!(digitalRead(1) == HIGH) or digitalRead(2) == HIGH && lastlightSensor == LOW)) {
       currentState = Idle;
+      lastmotionSensor = digitalRead(1);
+      lastlightSensor = digitalRead(2);
     }
     if (false) {
       currentState = Standby;
+      lastmotionSensor = digitalRead(1);
+      lastlightSensor = digitalRead(2);
     }
   }
   if (currentState == Standby) {
@@ -42,6 +48,8 @@ void loop() {
     digitalWrite(4, HIGH);
     if (true) {
       currentState = Alert;
+      lastmotionSensor = digitalRead(1);
+      lastlightSensor = digitalRead(2);
     }
   }
 }

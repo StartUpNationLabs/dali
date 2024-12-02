@@ -1,0 +1,16 @@
+app Scenario2 initial state Off {
+
+    Sensor button1 : 10
+    Sensor button2 : 12
+    AnalogActuator buzzer : 11
+
+    Off {
+        buzzer <= 0 Hz
+        when (button1 is HIGH and button2 is HIGH) => On
+    }
+
+    On {
+        buzzer <= 800 Hz
+        when (button1 is LOW and button2 is LOW) => Off
+    }
+}
