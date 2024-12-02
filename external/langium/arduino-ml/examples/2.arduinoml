@@ -1,4 +1,4 @@
-app Scenario1 initial state Off {
+app Scenario2 initial state Off {
 
     Sensor button1 : 10
     Sensor button2 : 12

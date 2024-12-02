@@ -9,12 +9,13 @@
     ],
     "type": "module",
     "scripts": {
-        "build": "npm run build:tsc && npm run build:esbuild && npm run build:generate_test && npm run build:generate_1 && npm run build:generate_2",
+        "build": "npm run build:tsc && npm run build:esbuild && npm run build:generate_test && npm run build:generate_1 && npm run build:generate_2 && npm run build:generate_3",
         "build:tsc": "tsc -b tsconfig.json",
         "build:esbuild": "node esbuild.mjs",
         "build:generate_test": "node .\\bin\\cli.js generate .\\examples\\test.arduinoml",
         "build:generate_1": "node .\\bin\\cli.js generate .\\examples\\1.arduinoml",
         "build:generate_2": "node .\\bin\\cli.js generate .\\examples\\2.arduinoml",
+        "build:generate_3": "node .\\bin\\cli.js generate .\\examples\\3.arduinoml",
 
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
         "lint": "eslint src --ext ts",

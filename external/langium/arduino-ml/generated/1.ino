@@ -19,6 +19,7 @@ void loop() {
     analogWrite(11, 0);
     if (digitalRead(10) == HIGH) {
       currentState = On;
+      lastbutton = digitalRead(10);
     }
   }
   if (currentState == On) {
@@ -26,6 +27,7 @@ void loop() {
     analogWrite(11, 800);
     if (digitalRead(10) == LOW) {
       currentState = Off;
+      lastbutton = digitalRead(10);
     }
   }
 }
