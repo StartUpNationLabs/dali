@@ -70,17 +70,22 @@ export function generateIno(model: App, filePath: string, destination: string | 
                 if (action.duration) {
                     code += `    tone(${action.actuator.ref?.outputPin}, ${action.frequency}, ${action.duration});\n`;
                     code += `    delay(${action.duration});\n`;
-                }
-                else{
+                } else {
                     code += `    analogWrite(${action.actuator.ref?.outputPin}, ${action.frequency});\n`;
                 }
             }
         });
 
         // Handle transitions
+
         state.transitions.forEach(transition => {
             code += `    if (${generateConditionCode(transition.condition)}) {\n`;
             code += `      currentState = ${transition.next.ref?.name};\n`;
+            bricks.forEach(brick => {
+                if (brick.$type === 'Sensor') {
+                    code += `      last${brick.name} = digitalRead(${brick.inputPin});\n`;
+                }
+            });
             code += `    }\n`;
         });
 
