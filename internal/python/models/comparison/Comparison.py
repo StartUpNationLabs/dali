@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
-from ..brick.Sensor import Sensor
-from ..condition.Condition import Condition
-from ..Signal import Signal
+from models.brick.Sensor import Sensor
+from models.condition.Condition import Condition
+from models.Signal import Signal
 
 class Comparison(Condition):
     def __init__(self, sensor: Sensor):

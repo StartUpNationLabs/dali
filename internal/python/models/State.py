@@ -1,4 +1,4 @@
-from .NamedElement import NamedElement
+from models.NamedElement import NamedElement
 
 class State(NamedElement):
     def __init__(self, name:str, transitions = None, actions = None):
@@ -19,7 +19,11 @@ class State(NamedElement):
 
     def __str__(self) -> str :
         return f"""
-        void {self.name}(){{
-          {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
-        }}
-        """
+void {self.name}(){{
+{''.join([str(action) + "\n" for action in self.actions]).rstrip()}
+    
+    while(true){{
+        {'\t'.join([str(transition) + "\n\t" for transition in self.transitions]).rstrip()}
+    }}
+}}
+"""

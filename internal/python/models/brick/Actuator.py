@@ -1,4 +1,4 @@
-from .Brick import Brick
+from models.brick.Brick import Brick
 
 class Actuator(Brick):
     def __init__(self, name: str, pin: int):

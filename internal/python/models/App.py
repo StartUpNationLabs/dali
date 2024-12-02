@@ -1,6 +1,6 @@
-from .NamedElement import NamedElement
-from .State import State
-from .brick.Brick import Brick
+from models.NamedElement import NamedElement
+from models.State import State
+from models.brick.Brick import Brick
 
 
 class App(NamedElement):
@@ -17,16 +17,15 @@ class App(NamedElement):
     
     def __str__(self) -> str:
         return f"""
-        {''.join([brick.globalVariable() + "\n" for brick in self.bricks]).rstrip()}
+{''.join([brick.globalVariable() + "\n" for brick in self.bricks]).rstrip()}
 
-        void setup(){{
-            Serial.begin(9600);
-            {''.join([str(brick) + "\n" for brick in self.bricks]).rstrip()}
-        }}
+void setup(){{
+    Serial.begin(9600);
+    {''.join([str(brick) + "\n\t" for brick in self.bricks]).rstrip()}
+}}
 
-        void loop(){{
-            {self.initialState.generateCall()}
-        }}
-        
-        {''.join([str(state) + "\n" for state in self.states]).rstrip()}
+void loop(){{
+    {self.initialState.generateCall()}
+}}
+{''.join([str(state) + "\n" for state in self.states]).rstrip()}
     """
