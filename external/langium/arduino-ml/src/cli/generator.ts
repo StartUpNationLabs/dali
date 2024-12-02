@@ -78,7 +78,7 @@ export function generateIno(model: App, filePath: string, destination: string | 
         });
 
         // Handle transitions
-        state.transition.forEach(transition => {
+        state.transitions.forEach(transition => {
             code += `    if (${generateConditionCode(transition.condition)}) {\n`;
             code += `      currentState = ${transition.next.ref?.name};\n`;
             code += `    }\n`;

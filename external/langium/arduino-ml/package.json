@@ -9,7 +9,7 @@
     ],
     "type": "module",
     "scripts": {
-        "build": "tsc -b tsconfig.json && node esbuild.mjs && node .\\bin\\cli.js generate .\\test.arduinoml",
+        "build": "tsc -b tsconfig.json && node esbuild.mjs && node .\\bin\\cli.js generate .\\examples\\test.arduinoml",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
         "lint": "eslint src --ext ts",
         "langium:generate": "langium generate",

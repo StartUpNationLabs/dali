@@ -30,8 +30,8 @@ State :
 	name=ID '{'
 		actions+=Action
 		(actions+=Action)*
-		transition+=Transition
-        (Transition+=Transition)*
+		transitions+=Transition
+        (transitions+=Transition)*
 	'}';
 
 Action :
