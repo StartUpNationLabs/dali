@@ -21,8 +21,10 @@ void state0() {
   do{
     delay(20);
     buttonState = digitalRead(button);
-  }while(buttonState == LOW);
-  state1();
+    if(buttonState == LOW){
+      state1();
+    }
+  }while(true);
 }
 
 void state1() {
@@ -32,6 +34,9 @@ void state1() {
   do{
     delay(20);
     buttonState = digitalRead(button);
-  }while(buttonState == HIGH);
-  state0();
+    if(buttonState == HIGH){
+      state0();
+    }
+  }
+  while(true);
 }
