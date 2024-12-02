@@ -20,8 +20,10 @@ void state0() {
     delay(20);
     buttonState1 = digitalRead(button1);
     buttonState2 = digitalRead(button2);
-  }while(buttonState1 == LOW || buttonState2 == LOW );
-  state1();
+    if(buttonState1 == LOW || buttonState2 == LOW){
+      state1();
+    }
+  }while(true);
 }
 
 void state1() {
@@ -32,6 +34,8 @@ void state1() {
     delay(20);
     buttonState1 = digitalRead(button1);
     buttonState2 = digitalRead(button2);
-  }while(buttonState1 == HIGH && buttonState2 == HIGH );
-  state0();
+    if(buttonState1 == HIGH && buttonState2 == HIGH){
+      state0();
+    }
+  }while(true);
 }
