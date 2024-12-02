@@ -1,25 +1,15 @@
-app Scenario3 initial state OffAll {
+app Scenario3 initial state Off {
 
     Sensor button : 10
     DigitalActuator led : 9
 
-    OffAll {
+    Off {
         led <= LOW
-        when button is HIGH => OnAll
+        when button changed to HIGH => On
     }
 
-    OnAll {
+    On {
         led <= HIGH
-        when button is LOW => OnLed
-    }
-
-    OnLed {
-        led <= HIGH
-        when button is HIGH => OffLed
-    }
-
-    OffLed {
-        led <= LOW
-        when button is LOW => OffAll
+        when button changed to HIGH => Off
     }
 }

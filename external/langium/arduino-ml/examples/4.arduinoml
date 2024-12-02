@@ -1,0 +1,23 @@
+app Scenario4 initial state OffAll {
+
+    Sensor button : 10
+    DigitalActuator led : 9
+    AnalogActuator buzzer : 11
+
+    OffAll {
+        led <= LOW
+        buzzer <= 0 Hz
+        when button changed to HIGH => OnBuzzer
+    }
+
+    OnBuzzer {
+        buzzer <= 800 Hz
+        when button changed to HIGH => OnLed
+    }
+
+    OnLed {
+        buzzer <= 0 Hz
+        led <= HIGH
+        when button changed to HIGH => OffAll
+    }
+}
