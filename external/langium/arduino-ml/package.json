@@ -9,14 +9,10 @@
     ],
     "type": "module",
     "scripts": {
-        "build": "npm run build:tsc && npm run build:esbuild && npm run build:generate_test && npm run build:generate_1 && npm run build:generate_2 && npm run build:generate_3 && npm run build:music" ,
+        "build": "npm run build:tsc && npm run build:esbuild && npm run build:generate-all",
         "build:tsc": "tsc -b tsconfig.json",
         "build:esbuild": "node esbuild.mjs",
-        "build:generate_test": "node ./bin/cli.js generate ./examples/test.arduinoml",
-        "build:generate_1": "node ./bin/cli.js generate ./examples/1.arduinoml",
-        "build:generate_2": "node ./bin/cli.js generate ./examples/2.arduinoml",
-        "build:generate_3": "node ./bin/cli.js generate ./examples/3.arduinoml",
-        "build:music": "node ./bin/cli.js generate ./examples/music.arduinoml",
+        "build:generate-all": "node generate-all.js",
 
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
         "lint": "eslint src --ext ts",

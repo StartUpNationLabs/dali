@@ -1,8 +1,8 @@
 // Generated code for Scenario3
 
-enum State {OffAll,OnAll,OnLed,OffLed,};
+enum State {Off,On,};
 
-State currentState = OffAll;
+State currentState = Off;
 
 int lastbutton = 0;
 void setup() {
@@ -13,31 +13,17 @@ void setup() {
 }
 
 void loop() {
-  if (currentState == OffAll) {
+  if (currentState == Off) {
     digitalWrite(9, LOW);
-    if (digitalRead(10) == HIGH) {
-      currentState = OnAll;
+    if (digitalRead(10) == HIGH && lastbutton == LOW) {
+      currentState = On;
       lastbutton = digitalRead(10);
     }
   }
-  if (currentState == OnAll) {
+  if (currentState == On) {
     digitalWrite(9, HIGH);
-    if (digitalRead(10) == LOW) {
-      currentState = OnLed;
-      lastbutton = digitalRead(10);
-    }
-  }
-  if (currentState == OnLed) {
-    digitalWrite(9, HIGH);
-    if (digitalRead(10) == HIGH) {
-      currentState = OffLed;
-      lastbutton = digitalRead(10);
-    }
-  }
-  if (currentState == OffLed) {
-    digitalWrite(9, LOW);
-    if (digitalRead(10) == LOW) {
-      currentState = OffAll;
+    if (digitalRead(10) == HIGH && lastbutton == LOW) {
+      currentState = Off;
       lastbutton = digitalRead(10);
     }
   }

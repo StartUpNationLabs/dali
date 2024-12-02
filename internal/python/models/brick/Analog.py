@@ -1,5 +1,5 @@
-from Actuator import Actuator
+from .Actuator import Actuator
 
-class Digital(Actuator):
+class Analog(Actuator):
     def __init__(self, name: str, pin: int):
         super().__init__(name,pin)
