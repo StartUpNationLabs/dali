@@ -6,6 +6,7 @@ from models.brick.Digital import Digital
 from models.Signal import Signal
 
 if __name__ == '__main__' :
+    
     actuator = Digital("buzzer",2)
     action = DigitalAction(actuator,Signal.HIGH)
     state = State("state1")
