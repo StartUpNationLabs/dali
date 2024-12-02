@@ -1,0 +1,29 @@
+app SmartHome initial state Idle {
+
+    Sensor motionSensor : 1
+    Sensor lightSensor : 2
+    DigitalActuator alarm : 3
+    DigitalActuator lights : 4
+    AnalogActuator buzzer : 5
+
+
+    Idle {
+        alarm <= LOW
+        lights <= LOW
+        when ( motionSensor is HIGH and  lightSensor is LOW) => Alert
+    }
+
+    Alert {
+        alarm <= HIGH
+        lights <= HIGH
+        buzzer <= 800 Hz for 123 milliseconds
+        when (not ( motionSensor is HIGH) or lightSensor changed to HIGH) => Idle
+        when false => Standby
+    }
+
+    Standby {
+        alarm <= LOW
+        lights <= HIGH
+        when true => Alert
+    }
+}

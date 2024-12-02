@@ -1,7 +1,7 @@
 import { EmptyFileSystem } from 'langium';
 import { startLanguageServer } from 'langium/lsp';
 import { BrowserMessageReader, BrowserMessageWriter, createConnection } from 'vscode-languageserver/browser.js';
-import { createArdunioMlServices } from './ardunio-ml-module.js';
+import { createArduinoMlServices } from './arduino-ml-module.js';
 
 declare const self: DedicatedWorkerGlobalScope;
 
@@ -10,6 +10,6 @@ const messageWriter = new BrowserMessageWriter(self);
 
 const connection = createConnection(messageReader, messageWriter);
 
-const { shared } = createArdunioMlServices({ connection, ...EmptyFileSystem });
+const { shared } = createArduinoMlServices({ connection, ...EmptyFileSystem });
 
 startLanguageServer(shared);
