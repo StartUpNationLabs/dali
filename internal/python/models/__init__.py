@@ -1,7 +1,8 @@
-from .brick import DigitalActuator, Buzzer, Sensor
-from .action import DigitalAction, MelodyAction
-from .State import State
-from .condition import ConstantCondition, LogicalOperator, NotCondition, Operator
-from .Transition import Transition
-from .Signal import Signal
-from .App import App
+from .brick import *
+from .action import *
+from .State import *
+from .condition import *
+from .comparison import *
+from .Transition import *
+from .Signal import *
+from .App import *

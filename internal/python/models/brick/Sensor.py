@@ -5,6 +5,6 @@ class Sensor(Brick):
         super().__init__(name,pin)
     
     def __str__(self) -> str:
-        return f'pinMode({self.name}, INPUT);'
+        return f'\tpinMode({self.name}, INPUT);'
     
     

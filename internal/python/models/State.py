@@ -22,8 +22,7 @@ class State(NamedElement):
 void {self.name}(){{
 {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
     
-    while(true){{
-        {'\t'.join([str(transition) + "\n\t" for transition in self.transitions]).rstrip()}
-    }}
+\twhile(true){{{'\t'.join([str(transition) + "\n\t" for transition in self.transitions]).rstrip()}
+\t}}
 }}
 """

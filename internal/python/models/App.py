@@ -16,16 +16,15 @@ class App(NamedElement):
             self.bricks = bricks
     
     def __str__(self) -> str:
-        return f"""
-{''.join([brick.globalVariable() + "\n" for brick in self.bricks]).rstrip()}
+        return f"""{''.join([brick.globalVariable() + "\n" for brick in self.bricks]).rstrip()}
 
 void setup(){{
-    Serial.begin(9600);
-    {''.join([str(brick) + "\n\t" for brick in self.bricks]).rstrip()}
+\tSerial.begin(9600);
+{''.join([str(brick) + "\n" for brick in self.bricks]).rstrip()}
 }}
 
 void loop(){{
-    {self.initialState.generateCall()}
+\t{self.initialState.generateCall()}
 }}
 {''.join([str(state) + "\n" for state in self.states]).rstrip()}
     """

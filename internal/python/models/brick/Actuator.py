@@ -5,4 +5,4 @@ class Actuator(Brick):
         super().__init__(name,pin)
     
     def __str__(self) -> str:
-        return f'pinMode({self.name}, OUTPUT);'
+        return f'\tpinMode({self.name}, OUTPUT);'

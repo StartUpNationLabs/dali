@@ -1,4 +1,4 @@
-from models import App, State, Signal, DigitalActuator, Buzzer, Sensor, DigitalAction, MelodyAction, ConstantCondition, NotCondition, LogicalOperator, Operator, Transition
+from models import *
 
 if __name__ == '__main__' :
     button = Sensor("button", 0)
@@ -8,13 +8,15 @@ if __name__ == '__main__' :
     ledOn = DigitalAction(led, Signal.HIGH)
     buzzerPlay = MelodyAction(buzzer,120,5)
     
-    conditionTrue = ConstantCondition(Signal.HIGH)
-    conditionNot = NotCondition(conditionTrue)
-    conditionAnd = LogicalOperator(conditionTrue, conditionNot, Operator.Operator.AND)
+    buttonHigh = SimpleComparison(button, Signal.HIGH)
+    
+    conditionFalse = ConstantCondition(Signal.LOW)
+    conditionNot = NotCondition(conditionFalse)
+    conditionAnd = LogicalOperator(buttonHigh, conditionNot, Operator.AND)
     
     state2 = State("state2", transitions=[], actions=[buzzerPlay])
     
-    transition = Transition(state2, conditionTrue)
+    transition = Transition(state2, conditionFalse)
     transition2 = Transition(state2, conditionNot)
     transition3 = Transition(state2, conditionAnd)
     

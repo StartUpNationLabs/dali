@@ -7,7 +7,7 @@ class Transition():
         self.condition = condition
     
     def __str__(self) -> str :
-        return f"""if({str(self.condition)}){{
-            {self.nextState.generateCall()}
-        }}
-"""
+        return f"""
+\t\tif({str(self.condition)}){{
+\t\t\t{self.nextState.generateCall()}
+\t\t}}"""
