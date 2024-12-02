@@ -1,49 +1,97 @@
 app SmartHome initial state Idle {
 
-    Sensor button1 : 1
-    Sensor button2 : 2
-    AnalogActuator buzzer : 5
+    Sensor button1 : 8
+    Sensor button2 : 12
+    AnalogActuator buzzer : 11
 
 
     Idle {
-        alarm <= LOW
-        lights <= LOW
         buzzer <= 0 Hz
-        when ( button1 is HIGH ) => Play1
-        when ( button2 is HIGH ) => Play2
+        when button1 is HIGH => Play1
+        when button2 is HIGH => Play2
     }
 
     Play1 {
         buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 800 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 800 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 392 Hz for 400 milliseconds
-        buzzer <= 262 Hz for 400 milliseconds
-        buzzer <= 294 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 1600 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
 
-        Idle
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 800 milliseconds
+        buzzer <= 0 Hz for 200 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 800 milliseconds
+        buzzer <= 0 Hz for 200 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 392 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 262 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 294 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 1600 milliseconds
+        buzzer <= 0 Hz for 400 milliseconds
+
+        when true => Idle
     }
 
     Play2 {
         buzzer <= 349 Hz for 400 milliseconds
-        buzzer <= 349 Hz for 400 milliseconds
-        buzzer <= 349 Hz for 400 milliseconds
-        buzzer <= 349 Hz for 400 milliseconds
-        buzzer <= 349 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 294 Hz for 400 milliseconds
-        buzzer <= 294 Hz for 400 milliseconds
-        buzzer <= 330 Hz for 400 milliseconds
-        buzzer <= 294 Hz for 800 milliseconds
-        buzzer <= 392 Hz for 1600 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
 
-        Idle
+        buzzer <= 349 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 349 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 349 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 349 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 294 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 294 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 330 Hz for 400 milliseconds
+        buzzer <= 0 Hz for 100 milliseconds
+
+        buzzer <= 294 Hz for 800 milliseconds
+        buzzer <= 0 Hz for 200 milliseconds
+
+        buzzer <= 392 Hz for 1600 milliseconds
+        buzzer <= 0 Hz for 400 milliseconds
+
+
+        when true => Idle
     }
+}
