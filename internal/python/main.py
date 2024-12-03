@@ -8,7 +8,7 @@ if __name__ == '__main__' :
     ledOn = DigitalAction(led, Signal.HIGH)
     buzzerPlay = MelodyAction(buzzer,120,5)
     
-    buttonHigh = SimpleComparison(button, Signal.HIGH)
+    buttonHigh = EdgeComparison(button, Signal.HIGH, Signal.LOW)
     
     conditionFalse = ConstantCondition(Signal.LOW)
     conditionNot = NotCondition(conditionFalse)
@@ -18,7 +18,7 @@ if __name__ == '__main__' :
     
     transition = Transition(state2, conditionFalse)
     transition2 = Transition(state2, conditionNot)
-    transition3 = Transition(state2, conditionAnd)
+    transition3 = Transition(state2, buttonHigh)
     
     state = State("state1", transitions=[transition, transition2, transition3], actions=[ledOn])
     

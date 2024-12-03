@@ -1,6 +1,6 @@
 from enum import Enum
 
 class Signal(Enum):
-    LOW = "LOW",
+    LOW = "LOW"
     HIGH = "HIGH"
     
