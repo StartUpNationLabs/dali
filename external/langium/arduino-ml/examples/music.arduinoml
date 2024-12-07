@@ -2,7 +2,7 @@ app SmartHome initial state Idle {
 
     Sensor button1 : 8
     Sensor button2 : 12
-    AnalogActuator buzzer : 11
+    Buzzer buzzer : 11
 
 
     Idle {

@@ -4,6 +4,16 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import {extractDestinationAndName} from './cli-util.js';
 
+function invertSignalValue(value: string): string {
+    return value === 'HIGH' ? 'LOW' : 'HIGH';
+}
+
+
+function conditionId(condition: Condition) {
+    return condition.$cstNode?.offset;
+
+}
+
 
 export function generateIno(model: App, filePath: string, destination: string | undefined): string {
     const data = extractDestinationAndName(filePath, destination);
@@ -15,22 +25,6 @@ export function generateIno(model: App, filePath: string, destination: string | 
     const {name, bricks, initial, states} = model;
 
     code += `// Generated code for ${name}\n\n`;
-    // make an enum for the states
-    code += `enum State {`;
-    states.forEach(state => {
-        code += `${state.name},`;
-    });
-    code += `};\n\n`;
-
-    // Declare the state variable
-    code += `State currentState = ${initial.ref?.name};\n\n`;
-
-    // Declare the variables that store the last state of the sensors
-    bricks.forEach(brick => {
-        if (brick.$type === 'Sensor') {
-            code += `int last${brick.name} = 0;\n`;
-        }
-    });
 
     // Declare the setup function
     code += `void setup() {\n`;
@@ -43,30 +37,22 @@ export function generateIno(model: App, filePath: string, destination: string | 
         }
         if (brick.$type === 'DigitalActuator') {
             code += `  pinMode(${brick.outputPin}, OUTPUT);\n`;
-        } else if (brick.$type === 'AnalogActuator') {
+        } else if (brick.$type === 'Buzzer') {
             code += `  pinMode(${brick.outputPin}, OUTPUT);\n`;
-        }
-    });
-    // read the initial state of the sensors
-    bricks.forEach(brick => {
-        if (brick.$type === 'Sensor') {
-            code += `  last${brick.name} = digitalRead(${brick.inputPin});\n`;
         }
     });
 
 
     code += `}\n\n`;
 
-    // Declare the loop function
-    code += `void loop() {\n`;
 
-    // Generate states and transitions
+    // Generate states
     states.forEach(state => {
-        code += `  if (currentState == ${state.name}) {\n`;
+        code += `void ${state.name}() {\n`;
         state.actions.forEach(action => {
             if (action.$type === 'DigitalAction') {
                 code += `    digitalWrite(${action.actuator.ref?.outputPin}, ${action.value.value});\n`;
-            } else if (action.$type === 'AnalogAction') {
+            } else if (action.$type === 'MelodyAction') {
                 if (action.duration) {
                     code += `    tone(${action.actuator.ref?.outputPin}, ${action.frequency}, ${action.duration});\n`;
                     code += `    delay(${action.duration});\n`;
@@ -77,21 +63,27 @@ export function generateIno(model: App, filePath: string, destination: string | 
         });
 
         // Handle transitions
+        state.transitions.forEach(transition => {
+            code += `    ${generateStartConditionCode(transition.condition)}\n`;
+        })
+
+        code += `    while (true) {\n`;
+        state.transitions.forEach(transition => {
+            code += `    ${generateStartOfLoopConditionCode(transition.condition)}\n`;
+        })
 
         state.transitions.forEach(transition => {
             code += `    if (${generateConditionCode(transition.condition)}) {\n`;
-            code += `      currentState = ${transition.next.ref?.name};\n`;
-            bricks.forEach(brick => {
-                if (brick.$type === 'Sensor') {
-                    code += `      last${brick.name} = digitalRead(${brick.inputPin});\n`;
-                }
-            });
+            code += `      ${transition.next.ref?.name}();\n`;
             code += `    }\n`;
         });
+        code += `    }\n`;
 
         code += `  }\n`;
     });
-
+    // Declare the loop function
+    code += `void loop() {\n`;
+    code += `  ${initial.ref?.name}();\n`;
     code += `}\n`;
 
 
@@ -111,17 +103,54 @@ function generateConditionCode(condition: Condition): string {
     }
     if (condition.$type === 'Simple') {
         return `digitalRead(${condition.sensor.ref?.inputPin}) == ${condition.value.value}`;
-    } else if (condition.$type === 'Change') {
+    } else if (condition.$type === 'Edge') {
         // get the last value of the sensor and compare it with the current value
         // condition.value dictate if it is a rise or a decrease
-        if (condition.value.value === 'HIGH') {
-            return `digitalRead(${condition.sensor.ref?.inputPin}) == HIGH && last${condition.sensor.ref?.name} == LOW`;
-        } else if (condition.value.value === 'LOW') {
-            return `digitalRead(${condition.sensor.ref?.inputPin}) == LOW && last${condition.sensor.ref?.name} == HIGH`;
-        }
+        return `front${conditionId(condition)} == true && digitalRead(${condition.sensor.ref?.inputPin}) == ${condition.value.value}`;
 
     } else if (condition.$type === 'Constant') {
         return condition.value;
+    } else if (condition.$type === 'Click') {
+        return `front${conditionId(condition)} == true && digitalRead(${condition.sensor.ref?.inputPin}) == HIGH`;
     }
     return '';
+}
+
+function generateStartConditionCode(condition: Condition): string {
+    if (condition.$type === 'LogicalOperator') {
+        return `${generateStartConditionCode(condition.left)} ;  ${generateStartConditionCode(condition.right)}`;
+    } else if (condition.$type === 'Not') {
+        return `${generateStartConditionCode(condition.value)}`;
+    }
+
+    if (condition.$type === 'Edge' || condition.$type === 'Click') {
+        return `int front${conditionId(condition)} = false;\n`;
+    }
+    return '';
+}
+
+function generateStartOfLoopConditionCode(condition: Condition): string {
+    if (condition.$type === 'LogicalOperator') {
+        return `${generateStartOfLoopConditionCode(condition.left)} ;  ${generateStartOfLoopConditionCode(condition.right)}`;
+    } else if (condition.$type === 'Not') {
+        return `${generateStartOfLoopConditionCode(condition.value)}`;
+    }
+    let code: string = '';
+
+    if (condition.$type === 'Edge') {
+        if ("sensor" in condition) {
+            code += `    if (digitalRead(${condition.sensor.ref?.inputPin}) == ${invertSignalValue(condition.value.value)}) {\n`;
+            code += `      front${conditionId(condition)} = true;\n`;
+            code += `    }\n`;
+        }
+    }
+
+    if (condition.$type === 'Click') {
+        if ("sensor" in condition) {
+            code += `    if (digitalRead(${condition.sensor.ref?.inputPin}) == LOW) {\n`;
+            code += `      front${conditionId(condition)} = true;\n`;
+            code += `    }\n`;
+        }
+    }
+    return code;
 }

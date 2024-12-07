@@ -5,11 +5,11 @@ app Scenario3 initial state Off {
 
     Off {
         led <= LOW
-        when button changed to HIGH => On
+        when button clicked => On
     }
 
     On {
         led <= HIGH
-        when button changed to HIGH => Off
+        when button clicked => Off
     }
 }

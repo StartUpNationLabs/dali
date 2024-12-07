@@ -2,7 +2,7 @@ app Scenario2 initial state Off {
 
     Sensor button1 : 10
     Sensor button2 : 12
-    AnalogActuator buzzer : 11
+    Buzzer buzzer : 11
 
     Off {
         buzzer <= 0 Hz

@@ -1,11 +1,5 @@
 // Generated code for SmartHome
 
-enum State {Idle,Alert,Standby,};
-
-State currentState = Idle;
-
-int lastmotionSensor = 0;
-int lastlightSensor = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(1, INPUT);
@@ -13,43 +7,52 @@ void setup() {
   pinMode(3, OUTPUT);
   pinMode(4, OUTPUT);
   pinMode(5, OUTPUT);
-  lastmotionSensor = digitalRead(1);
-  lastlightSensor = digitalRead(2);
 }
 
-void loop() {
-  if (currentState == Idle) {
+void Idle() {
     digitalWrite(3, LOW);
     digitalWrite(4, LOW);
+     ;  
+    while (true) {
+     ;  
     if ((digitalRead(1) == HIGH and digitalRead(2) == LOW)) {
-      currentState = Alert;
-      lastmotionSensor = digitalRead(1);
-      lastlightSensor = digitalRead(2);
+      Alert();
+    }
     }
   }
-  if (currentState == Alert) {
+void Alert() {
     digitalWrite(3, HIGH);
     digitalWrite(4, HIGH);
     tone(5, 800, 123);
     delay(123);
-    if ((!(digitalRead(1) == HIGH) or digitalRead(2) == HIGH && lastlightSensor == LOW)) {
-      currentState = Idle;
-      lastmotionSensor = digitalRead(1);
-      lastlightSensor = digitalRead(2);
+     ;  int front474 = false;
+
+    
+    while (true) {
+     ;      if (digitalRead(2) == LOW) {
+      front474 = true;
+    }
+
+    
+    if ((!(digitalRead(1) == HIGH) or front474 == true && digitalRead(2) == HIGH)) {
+      Idle();
     }
     if (false) {
-      currentState = Standby;
-      lastmotionSensor = digitalRead(1);
-      lastlightSensor = digitalRead(2);
+      Standby();
+    }
     }
   }
-  if (currentState == Standby) {
+void Standby() {
     digitalWrite(3, LOW);
     digitalWrite(4, HIGH);
+    
+    while (true) {
+    
     if (true) {
-      currentState = Alert;
-      lastmotionSensor = digitalRead(1);
-      lastlightSensor = digitalRead(2);
+      Alert();
+    }
     }
   }
+void loop() {
+  Idle();
 }

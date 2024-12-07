@@ -2,7 +2,7 @@ app Scenario4 initial state OffAll {
 
     Sensor button : 10
     DigitalActuator led : 9
-    AnalogActuator buzzer : 11
+    Buzzer buzzer : 11
 
     OffAll {
         led <= LOW

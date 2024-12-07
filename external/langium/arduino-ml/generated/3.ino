@@ -1,30 +1,39 @@
 // Generated code for Scenario3
 
-enum State {Off,On,};
-
-State currentState = Off;
-
-int lastbutton = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(10, INPUT);
   pinMode(9, OUTPUT);
-  lastbutton = digitalRead(10);
 }
 
-void loop() {
-  if (currentState == Off) {
+void Off() {
     digitalWrite(9, LOW);
-    if (digitalRead(10) == HIGH && lastbutton == LOW) {
-      currentState = On;
-      lastbutton = digitalRead(10);
+    int front136 = false;
+
+    while (true) {
+        if (digitalRead(10) == LOW) {
+      front136 = true;
+    }
+
+    if (front136 == true && digitalRead(10) == HIGH) {
+      On();
+    }
     }
   }
-  if (currentState == On) {
+void On() {
     digitalWrite(9, HIGH);
-    if (digitalRead(10) == HIGH && lastbutton == LOW) {
-      currentState = Off;
-      lastbutton = digitalRead(10);
+    int front211 = false;
+
+    while (true) {
+        if (digitalRead(10) == LOW) {
+      front211 = true;
+    }
+
+    if (front211 == true && digitalRead(10) == HIGH) {
+      Off();
+    }
     }
   }
+void loop() {
+  Off();
 }
