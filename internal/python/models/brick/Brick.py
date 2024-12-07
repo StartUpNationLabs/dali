@@ -1,4 +1,4 @@
-from ..NamedElement import NamedElement
+from models.NamedElement import NamedElement
 
 class Brick(NamedElement):
     def __init__(self, name:str, pin: int):
@@ -6,4 +6,4 @@ class Brick(NamedElement):
         self.pin = pin
     
     def globalVariable(self) -> str :
-        return f'{self.name} = {self.pin};'
+        return f'int {self.name} = {self.pin};'

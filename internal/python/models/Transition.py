@@ -1,9 +1,13 @@
-from .NamedElement import NamedElement
-from .State import State
-from .condition.Condition import Condition
+from models.condition.Condition import Condition
+from typing import Callable
 
-class Transition(NamedElement):
-    def __init__(self, name:str, nextState: State, condition: Condition):
-        super().__init__(name)
-        self.nextState = nextState
+class Transition():
+    def __init__(self, nextStateCall: Callable, condition: Condition):
+        self.nextStateCall = nextStateCall
         self.condition = condition
+    
+    def __str__(self) -> str :
+        return f"""
+\t\tif({str(self.condition)}){{
+\t\t\t{self.nextStateCall()}
+\t\t}}"""

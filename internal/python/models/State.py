@@ -1,4 +1,5 @@
-from .NamedElement import NamedElement
+from models.NamedElement import NamedElement
+from models.Transition import Transition
 
 class State(NamedElement):
     def __init__(self, name:str, transitions = None, actions = None):
@@ -16,10 +17,16 @@ class State(NamedElement):
     
     def generateCall(self) :
         return f'{self.name}();'
+    
+    def addTransition(self, transition: Transition) :
+        self.transitions.append(transition)
 
     def __str__(self) -> str :
         return f"""
-        void {self.name}(){{
-          {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
-        }}
-        """
+void {self.name}(){{
+{''.join([str(action) + "\n" for action in self.actions]).rstrip()}
+    
+\twhile(true){{{'\t'.join([str(transition) + "\n\t" for transition in self.transitions]).rstrip()}
+\t}}
+}}
+"""
