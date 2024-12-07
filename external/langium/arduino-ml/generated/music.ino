@@ -1,35 +1,28 @@
 // Generated code for SmartHome
 
-enum State {Idle,Play1,Play2,};
-
-State currentState = Idle;
-
-int lastbutton1 = 0;
-int lastbutton2 = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(8, INPUT);
   pinMode(12, INPUT);
   pinMode(11, OUTPUT);
-  lastbutton1 = digitalRead(8);
-  lastbutton2 = digitalRead(12);
 }
 
-void loop() {
-  if (currentState == Idle) {
+void Idle() {
     analogWrite(11, 0);
+    
+    
+    while (true) {
+    
+    
     if (digitalRead(8) == HIGH) {
-      currentState = Play1;
-      lastbutton1 = digitalRead(8);
-      lastbutton2 = digitalRead(12);
+      Play1();
     }
     if (digitalRead(12) == HIGH) {
-      currentState = Play2;
-      lastbutton1 = digitalRead(8);
-      lastbutton2 = digitalRead(12);
+      Play2();
+    }
     }
   }
-  if (currentState == Play1) {
+void Play1() {
     tone(11, 330, 400);
     delay(400);
     tone(11, 0, 100);
@@ -74,13 +67,15 @@ void loop() {
     delay(1600);
     tone(11, 0, 400);
     delay(400);
+    
+    while (true) {
+    
     if (true) {
-      currentState = Idle;
-      lastbutton1 = digitalRead(8);
-      lastbutton2 = digitalRead(12);
+      Idle();
+    }
     }
   }
-  if (currentState == Play2) {
+void Play2() {
     tone(11, 349, 400);
     delay(400);
     tone(11, 0, 100);
@@ -137,10 +132,14 @@ void loop() {
     delay(1600);
     tone(11, 0, 400);
     delay(400);
+    
+    while (true) {
+    
     if (true) {
-      currentState = Idle;
-      lastbutton1 = digitalRead(8);
-      lastbutton2 = digitalRead(12);
+      Idle();
+    }
     }
   }
+void loop() {
+  Idle();
 }

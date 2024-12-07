@@ -1,40 +1,56 @@
 // Generated code for Scenario4
 
-enum State {OffAll,OnBuzzer,OnLed,};
-
-State currentState = OffAll;
-
-int lastbutton = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(10, INPUT);
   pinMode(9, OUTPUT);
   pinMode(11, OUTPUT);
-  lastbutton = digitalRead(10);
 }
 
-void loop() {
-  if (currentState == OffAll) {
+void OffAll() {
     digitalWrite(9, LOW);
     analogWrite(11, 0);
-    if (digitalRead(10) == HIGH && lastbutton == LOW) {
-      currentState = OnBuzzer;
-      lastbutton = digitalRead(10);
+    int front198 = false;
+
+    while (true) {
+        if (digitalRead(10) == LOW) {
+      front198 = true;
+    }
+
+    if (front198 == true && digitalRead(10) == HIGH) {
+      OnBuzzer();
+    }
     }
   }
-  if (currentState == OnBuzzer) {
+void OnBuzzer() {
     analogWrite(11, 800);
-    if (digitalRead(10) == HIGH && lastbutton == LOW) {
-      currentState = OnLed;
-      lastbutton = digitalRead(10);
+    int front298 = false;
+
+    while (true) {
+        if (digitalRead(10) == LOW) {
+      front298 = true;
+    }
+
+    if (front298 == true && digitalRead(10) == HIGH) {
+      OnLed();
+    }
     }
   }
-  if (currentState == OnLed) {
+void OnLed() {
     analogWrite(11, 0);
     digitalWrite(9, HIGH);
-    if (digitalRead(10) == HIGH && lastbutton == LOW) {
-      currentState = OffAll;
-      lastbutton = digitalRead(10);
+    int front411 = false;
+
+    while (true) {
+        if (digitalRead(10) == LOW) {
+      front411 = true;
+    }
+
+    if (front411 == true && digitalRead(10) == HIGH) {
+      OffAll();
+    }
     }
   }
+void loop() {
+  OffAll();
 }
