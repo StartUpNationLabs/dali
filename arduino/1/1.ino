@@ -6,8 +6,6 @@ void setup() {
   pinMode(led, OUTPUT); 
   pinMode(buzzer, OUTPUT); 
   pinMode(button, INPUT);
-
-  state0();
 }
 
 void loop() {
