@@ -22,7 +22,7 @@ void On() {
      ;  
     while (true) {
      ;  
-    if ((digitalRead(10) == LOW and digitalRead(12) == LOW)) {
+    if ((digitalRead(10) == LOW or digitalRead(12) == LOW)) {
       Off();
     }
     }

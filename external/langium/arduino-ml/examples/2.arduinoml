@@ -11,6 +11,6 @@ app Scenario2 initial state Off {
 
     On {
         buzzer <= 800 Hz
-        when (button1 is LOW and button2 is LOW) => Off
+        when (button1 is LOW or button2 is LOW) => Off
     }
 }
