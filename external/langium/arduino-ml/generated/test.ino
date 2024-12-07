@@ -25,16 +25,16 @@ void Alert() {
     digitalWrite(4, HIGH);
     tone(5, 800, 123);
     delay(123);
-     ;  int front482 = false;
+     ;  int front474 = false;
 
     
     while (true) {
      ;      if (digitalRead(2) == LOW) {
-      front482 = true;
+      front474 = true;
     }
 
     
-    if ((!(digitalRead(1) == HIGH) or front482 == true && digitalRead(2) == HIGH)) {
+    if ((!(digitalRead(1) == HIGH) or front474 == true && digitalRead(2) == HIGH)) {
       Idle();
     }
     if (false) {

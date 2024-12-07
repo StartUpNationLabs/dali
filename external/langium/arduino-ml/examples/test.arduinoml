@@ -4,7 +4,7 @@ app SmartHome initial state Idle {
     Sensor lightSensor : 2
     DigitalActuator alarm : 3
     DigitalActuator lights : 4
-    AnalogActuator buzzer : 5
+    Buzzer buzzer : 5
 
 
     Idle {

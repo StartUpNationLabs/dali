@@ -19,12 +19,12 @@ Sensor :
 	'Sensor' name=ID ':' inputPin=INT;
 
 Actuator :
-    (DigitalActuator | AnalogActuator);
+    (DigitalActuator | Buzzer);
 
 DigitalActuator:
 	'DigitalActuator' name=ID ':' outputPin=INT;
-AnalogActuator:
-    'AnalogActuator' name=ID ':' outputPin=INT;
+Buzzer:
+    'Buzzer' name=ID ':' outputPin=INT;
 
 State :
 	name=ID '{'
@@ -35,18 +35,21 @@ State :
 	'}';
 
 Action :
-    (DigitalAction | AnalogAction);
+    (DigitalAction | MelodyAction);
 
 DigitalAction:
 	actuator=[DigitalActuator:ID] '<=' value=Signal;
-AnalogAction:
-    actuator=[AnalogActuator:ID] '<=' frequency=INT 'Hz' ( 'for' duration=INT 'milliseconds') ?;
+MelodyAction:
+    actuator=[Buzzer:ID] '<=' frequency=INT 'Hz' ( 'for' duration=INT 'milliseconds') ?;
 
 Transition :
 	'when' condition=Condition '=>' next=[State:ID];
 
 Condition :
-	(LogicalOperator | Not | Comparison | Constant);
+	(LogicalOperator | Not | Comparison | Constant | '(' Condition ')' | Click );
+
+Click:
+    sensor=[Sensor:ID] 'clicked';
 
 LogicalOperator:
     '(' left=Condition  type=('and' | 'or') right=Condition ')';

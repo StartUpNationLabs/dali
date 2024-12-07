@@ -37,7 +37,7 @@ export function generateIno(model: App, filePath: string, destination: string | 
         }
         if (brick.$type === 'DigitalActuator') {
             code += `  pinMode(${brick.outputPin}, OUTPUT);\n`;
-        } else if (brick.$type === 'AnalogActuator') {
+        } else if (brick.$type === 'Buzzer') {
             code += `  pinMode(${brick.outputPin}, OUTPUT);\n`;
         }
     });
@@ -52,7 +52,7 @@ export function generateIno(model: App, filePath: string, destination: string | 
         state.actions.forEach(action => {
             if (action.$type === 'DigitalAction') {
                 code += `    digitalWrite(${action.actuator.ref?.outputPin}, ${action.value.value});\n`;
-            } else if (action.$type === 'AnalogAction') {
+            } else if (action.$type === 'MelodyAction') {
                 if (action.duration) {
                     code += `    tone(${action.actuator.ref?.outputPin}, ${action.frequency}, ${action.duration});\n`;
                     code += `    delay(${action.duration});\n`;
@@ -110,6 +110,8 @@ function generateConditionCode(condition: Condition): string {
 
     } else if (condition.$type === 'Constant') {
         return condition.value;
+    } else if (condition.$type === 'Click') {
+        return `front${conditionId(condition)} == true && digitalRead(${condition.sensor.ref?.inputPin}) == HIGH`;
     }
     return '';
 }
@@ -121,7 +123,7 @@ function generateStartConditionCode(condition: Condition): string {
         return `${generateStartConditionCode(condition.value)}`;
     }
 
-    if (condition.$type === 'Change') {
+    if (condition.$type === 'Change' || condition.$type === 'Click') {
         return `int front${conditionId(condition)} = false;\n`;
     }
     return '';
@@ -138,6 +140,14 @@ function generateStartOfLoopConditionCode(condition: Condition): string {
     if (condition.$type === 'Change') {
         if ("sensor" in condition) {
             code += `    if (digitalRead(${condition.sensor.ref?.inputPin}) == ${invertSignalValue(condition.value.value)}) {\n`;
+            code += `      front${conditionId(condition)} = true;\n`;
+            code += `    }\n`;
+        }
+    }
+
+    if (condition.$type === 'Click') {
+        if ("sensor" in condition) {
+            code += `    if (digitalRead(${condition.sensor.ref?.inputPin}) == LOW) {\n`;
             code += `      front${conditionId(condition)} = true;\n`;
             code += `    }\n`;
         }

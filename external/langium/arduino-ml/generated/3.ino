@@ -22,14 +22,14 @@ void Off() {
   }
 void On() {
     digitalWrite(9, HIGH);
-    int front219 = false;
+    int front211 = false;
 
     while (true) {
         if (digitalRead(10) == LOW) {
-      front219 = true;
+      front211 = true;
     }
 
-    if (front219 == true && digitalRead(10) == HIGH) {
+    if (front211 == true && digitalRead(10) == HIGH) {
       Off();
     }
     }

@@ -10,28 +10,28 @@ void setup() {
 void OffAll() {
     digitalWrite(9, LOW);
     analogWrite(11, 0);
-    int front198 = false;
+    int front190 = false;
 
     while (true) {
         if (digitalRead(10) == LOW) {
-      front198 = true;
+      front190 = true;
     }
 
-    if (front198 == true && digitalRead(10) == HIGH) {
+    if (front190 == true && digitalRead(10) == HIGH) {
       OnBuzzer();
     }
     }
   }
 void OnBuzzer() {
     analogWrite(11, 800);
-    int front298 = false;
+    int front290 = false;
 
     while (true) {
         if (digitalRead(10) == LOW) {
-      front298 = true;
+      front290 = true;
     }
 
-    if (front298 == true && digitalRead(10) == HIGH) {
+    if (front290 == true && digitalRead(10) == HIGH) {
       OnLed();
     }
     }
@@ -39,14 +39,14 @@ void OnBuzzer() {
 void OnLed() {
     analogWrite(11, 0);
     digitalWrite(9, HIGH);
-    int front411 = false;
+    int front403 = false;
 
     while (true) {
         if (digitalRead(10) == LOW) {
-      front411 = true;
+      front403 = true;
     }
 
-    if (front411 == true && digitalRead(10) == HIGH) {
+    if (front403 == true && digitalRead(10) == HIGH) {
       OffAll();
     }
     }
