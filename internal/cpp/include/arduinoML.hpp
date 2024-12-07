@@ -14,10 +14,10 @@
 #define SENSOR(pin)  init.sensor(pin);
 #define DEVICE(pin)  init.device(pin);
 
-#define ACTION(number, pin, state) DigitalAction action##number(pin, state);
-#define CONDITION(number, pin, state, next_step) DigitalCondition condition##number(pin, state, next_step);
+#define ACTION(actionNumber, pin, wantedState) DigitalAction action##actionNumber(pin, wantedState);
+#define CONDITION(conditionNumber, pin, stateToSwitch, nextStep) DigitalCondition condition##conditionNumber(pin, stateToSwitch, nextStep);
 
-#define STEP(number) Step step##number;
+#define STEP(stepNumber) Step step##stepNumber;
 #define ADD_CONDITION(stepNumber, conditionNumber) step##stepNumber.addDigitalCondition(condition##conditionNumber);
 #define ADD_ACTION(stepNumber, actionNumber) step##stepNumber.addDigitalAction(action##actionNumber);
-#define END_STEP(number) step##number.finish();
+#define END_STEP(stepNumber) step##stepNumber.finish();
