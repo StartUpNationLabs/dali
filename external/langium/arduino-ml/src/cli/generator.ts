@@ -103,7 +103,7 @@ function generateConditionCode(condition: Condition): string {
     }
     if (condition.$type === 'Simple') {
         return `digitalRead(${condition.sensor.ref?.inputPin}) == ${condition.value.value}`;
-    } else if (condition.$type === 'Change') {
+    } else if (condition.$type === 'Edge') {
         // get the last value of the sensor and compare it with the current value
         // condition.value dictate if it is a rise or a decrease
         return `front${conditionId(condition)} == true && digitalRead(${condition.sensor.ref?.inputPin}) == ${condition.value.value}`;
@@ -123,7 +123,7 @@ function generateStartConditionCode(condition: Condition): string {
         return `${generateStartConditionCode(condition.value)}`;
     }
 
-    if (condition.$type === 'Change' || condition.$type === 'Click') {
+    if (condition.$type === 'Edge' || condition.$type === 'Click') {
         return `int front${conditionId(condition)} = false;\n`;
     }
     return '';
@@ -137,7 +137,7 @@ function generateStartOfLoopConditionCode(condition: Condition): string {
     }
     let code: string = '';
 
-    if (condition.$type === 'Change') {
+    if (condition.$type === 'Edge') {
         if ("sensor" in condition) {
             code += `    if (digitalRead(${condition.sensor.ref?.inputPin}) == ${invertSignalValue(condition.value.value)}) {\n`;
             code += `      front${conditionId(condition)} = true;\n`;

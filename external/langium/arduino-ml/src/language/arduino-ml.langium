@@ -58,11 +58,11 @@ Not:
     'not' '(' value=Condition ')';
 
 Comparison :
-    (Simple | Change);
+    (Simple | Edge);
 Simple:
 	sensor=[Sensor:ID] 'is' value=Signal;
 
-Change:
+Edge:
     sensor=[Sensor:ID] 'changed' 'to' value=Signal;
 
 Signal:
