@@ -8,4 +8,4 @@ class SimpleComparison(Comparison):
         self.value = value
     
     def __str__(self) -> str :
-        return f'(digitalRead({self.sensor.name}) == {self.value.value})'
+        return f'(digitalRead({self.sensor.pin}) == {self.value.value})'

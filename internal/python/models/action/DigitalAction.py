@@ -9,4 +9,4 @@ class DigitalAction(Action):
         self.value = value
     
     def __str__(self) -> str :
-        return f'\tdigitalWrite({self.actuator.name},{self.value.name});'
+        return f'\tdigitalWrite({self.actuator.pin},{self.value.name});'

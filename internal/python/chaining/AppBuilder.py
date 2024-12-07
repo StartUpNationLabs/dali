@@ -27,7 +27,6 @@ class BrickBuilder:
         self.__pin = pinNumber
         return self.__app
 
-    @property
     def build(self) -> Brick:
         if self.__pin is None or self.__type not in [
             BrickType.SENSOR,
@@ -56,22 +55,22 @@ class AppBuilder:
         self.__states: list['StateBuilder'] = []  # String annotation
         self.__initialState: 'StateBuilder' = None  # String annotation
 
-    def with_sensor_with_name(self, sensorName: str) -> BrickBuilder:
+    def with_sensor(self, sensorName: str) -> BrickBuilder:
         brick = BrickBuilder(sensorName, BrickType.SENSOR, self)
         self.__bricks.append(brick)
         return brick
 
-    def with_digital_actuator_with_name(self, actuatorName: str) -> BrickBuilder:
+    def with_digital_actuator(self, actuatorName: str) -> BrickBuilder:
         brick = BrickBuilder(actuatorName, BrickType.DIGITAL_ACTUATOR, self)
         self.__bricks.append(brick)
         return brick
 
-    def with_buzzer_with_name(self, buzzerName: str) -> BrickBuilder:
+    def with_buzzer(self, buzzerName: str) -> BrickBuilder:
         brick = BrickBuilder(buzzerName, BrickType.BUZZER, self)
         self.__bricks.append(brick)
         return brick
 
-    def with_state_with_name(self, stateName: str) -> 'StateBuilder':  # String annotation
+    def with_state(self, stateName: str) -> 'StateBuilder':  # String annotation
         from chaining.StateBuilder import StateBuilder  # Lazy import
         state = StateBuilder(stateName, self.__bricks, self)
         if self.__initialState is None:
@@ -79,7 +78,7 @@ class AppBuilder:
         self.__states.append(state)
         return state
 
-    def with_initial_state_with_name(self, stateName: str) -> 'StateBuilder':  # String annotation
+    def with_initial_state(self, stateName: str) -> 'StateBuilder':  # String annotation
         from chaining.StateBuilder import StateBuilder  # Lazy import
         state = StateBuilder(stateName, self.__bricks, self)
         self.__initialState = state
@@ -93,20 +92,19 @@ class AppBuilder:
                 "An initial state is needed in order to instanciate an App"
             )
 
-        brickList: list[Brick] = [brick.build for brick in self.__bricks]
-        stateList: list[State] = [state.build for state in self.__states]
+        brickList: list[Brick] = [brick.build() for brick in self.__bricks]
+        stateList: list[State] = [state.build() for state in self.__states]
         
         for state in self.__states :
             for transitionBuilder in state.transitions :
-                transitionBuilder.build(stateList)
-    
+                transitionBuilder.build([brick for brick in brickList if isinstance(brick,Sensor)], stateList)
 
-        initialState: State = self.__initialState.build
+        initialState: State = self.__initialState.build()
 
         res = App(self.__name, initialState, stateList, brickList)
 
         print(res)  # Display the ino
         return res
 
-def create_app_with_name(name: str) -> AppBuilder :
+def create_app(name: str) -> AppBuilder :
     return AppBuilder(name)

@@ -7,7 +7,7 @@ class BaseComparisonDto():
         __metaclass__ = ABCMeta
     
     @abstractmethod
-    def build(self, bricks: list[Sensor]) -> Comparison:
+    def build(self, bricks: list[Sensor]) -> Condition:
         pass
 
 class SimpleComparisonDto(BaseComparisonDto):
@@ -37,6 +37,13 @@ class EdgeComparisonDto(BaseComparisonDto):
             raise InvalidOperation("The provided sensor name don't exist in the appBuilder.")
         return EdgeComparison(sensor,self.fromValue,self.toValue)
 
+class NotComparisonDto(BaseComparisonDto):
+    def __init__(self, comparisonDto: BaseComparisonDto):
+        self.__condition : SimpleComparisonDto = comparisonDto
+    
+    def build(self, bricks: list[Sensor]) -> NotCondition :
+        return NotCondition(self.__condition.build(bricks))
+
 class LogicalComparisonDto(BaseComparisonDto):
     def __init__(self, operator: Operator, left : BaseComparisonDto, right : BaseComparisonDto):
         self.operator = operator
@@ -46,7 +53,7 @@ class LogicalComparisonDto(BaseComparisonDto):
     def setCondition(self, condition: BaseComparisonDto):
         self.right = condition
     
-    def build(self, bricks: list[Sensor]):
+    def build(self, bricks: list[Sensor]) -> LogicalOperator:
         left = self.left.build(bricks)
         right = self.right.build(bricks)
         

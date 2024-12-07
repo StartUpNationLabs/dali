@@ -6,6 +6,19 @@ class Transition():
         self.nextStateCall = nextStateCall
         self.condition = condition
     
+    def generateFlag(self, offset: str) -> str:
+        return self.condition.generateFlagDefinition(offset)
+    
+    def generateFlagCheck(self, offset: str) -> str :
+        return self.condition.generateFlagCheck(offset)
+    
+    def generateCondition(self, offset: str) -> str :
+        return f"""
+\t\tif({str(self.condition.generateCondition(offset))}){{
+\t\t\t{self.nextStateCall()}
+\t\t}}
+"""
+    
     def __str__(self) -> str :
         return f"""
 \t\tif({str(self.condition)}){{

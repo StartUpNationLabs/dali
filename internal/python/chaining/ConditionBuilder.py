@@ -30,25 +30,25 @@ class ConditionBuilder:
         self.__condition = tmpCondition
         return SubConditionBuilder(sensorName, self, tmpCondition.setCondition)
 
-    def and_condition(self, sensorName: str) -> 'SubConditionBuilder':
+    def and_(self, sensorName: str) -> 'SubConditionBuilder':
         return self.logicalCondition(Operator.AND, sensorName)
 
-    def or_condition(self, sensorName: str) -> 'SubConditionBuilder':
+    def or_(self, sensorName: str) -> 'SubConditionBuilder':
         return self.logicalCondition(Operator.OR, sensorName)
 
     @property
     def end_transition(self) -> 'StateBuilder':
         return self.__stateBuilder
-    
-    @property
-    def build(self) -> Condition :
-        return self.__condition.build(self.__bricks)
+
+    def build(self, bricks: list[Sensor]) -> Condition :
+        return self.__condition.build(bricks)
         
 class SubConditionBuilder:
     def __init__(self, sensorName: str, conditionBuilder: ConditionBuilder, setCondition: Callable):
         self.__sensorName = sensorName
         self.__builder = conditionBuilder
         self.__setCondition = setCondition
+        self.__negate = False
 
     def asValue(self, value: Signal) -> ConditionBuilder:
         if self.__sensorName is None:
@@ -57,7 +57,8 @@ class SubConditionBuilder:
         if value is None:
             raise MissingOperationElement("Try to read sensor data, but with an undefined value to ensure the comparison.")
 
-        self.__setCondition(SimpleComparisonDto(self.__sensorName, value))
+        condition = SimpleComparisonDto(self.__sensorName, value)
+        self.__setCondition(condition if not self.__negate else NotComparisonDto(condition))
         return self.__builder
 
     def fromValueToValue(self, fromValue: Signal, toValue: Signal) -> ConditionBuilder:
@@ -70,8 +71,14 @@ class SubConditionBuilder:
         if toValue is None:
             raise MissingOperationElement("Try to read sensor data, but with an undefined destination value to ensure the comparison.")
 
-        self.__setCondition(EdgeComparisonDto(self.__sensorName, fromValue, toValue))
+        condition = EdgeComparisonDto(self.__sensorName, fromValue, toValue)
+        self.__setCondition(condition if not self.__negate else NotComparisonDto(condition))
         return self.__builder
+    
+    @property
+    def does_not(self) -> Self :
+        self.__negate = not self.__negate
+        return self
 
     @property
     def have_high_value(self) -> ConditionBuilder:

@@ -9,7 +9,7 @@ class StateBuilder:
     def __init__(self, stateName: str, bricks: list['BrickBuilder'], app: 'AppBuilder'):
         self.__name = stateName
         self.__actions: list['ActionBuilder'] = []
-        self.__transitions = []
+        self.__transitions : list['TransitionBuilder'] = []
         self.__bricks = bricks
         self.__app = app
     
@@ -27,7 +27,7 @@ class StateBuilder:
         if (actuatorName == None or actuatorName == ''):
             raise InvalidOperation("Your can't switch on an actuator with an undefined name.")
         
-        actuator = next((brick for brick in self.__bricks if (brick.name == actuatorName and brick.type == BrickType.DIGITAL_ACTUATOR)),None)
+        actuator = next((brick for brick in self.__bricks if (brick.name == actuatorName and brick.type in [BrickType.DIGITAL_ACTUATOR, BrickType.BUZZER])),None)
         
         if (actuator == None) :
             raise InvalidOperation("The actuator name you gave is not an existing digital actuator. Try creating it before calling the switch_on function.")
@@ -36,13 +36,13 @@ class StateBuilder:
         self.__actions.append(action)
         return self
     
-    def switch_on_digital_actuator_with_name(self, actuatorName: str):
+    def switch_on(self, actuatorName: str):
         return self.__switch_digital_actuator_to_value(actuatorName, Signal.HIGH)
     
-    def switch_off_digital_actuator_with_name(self, actuatorName: str):
+    def switch_off(self, actuatorName: str):
         return self.__switch_digital_actuator_to_value(actuatorName, Signal.LOW)
     
-    def play_music_with_buzzer_named(self, buzzerName: str) -> 'MelodyActionBuilder':
+    def play_music_with_buzzer(self, buzzerName: str, frequency: int) -> 'MelodyActionBuilder':
         from chaining.AppBuilder import BrickType
         if (buzzerName == None or buzzerName == ''):
             raise InvalidOperation("Your can't play music on a buzzer with an undefined name.")
@@ -52,7 +52,7 @@ class StateBuilder:
         if (buzzer == None) :
             raise InvalidOperation("The buzzer name you gave is not an existing buzzer. Try creating it before calling the play_music function.")
         
-        action = MelodyActionBuilder(buzzer, self)
+        action = MelodyActionBuilder(buzzer, frequency, self)
         self.__actions.append(action)
         return action
 
@@ -60,9 +60,8 @@ class StateBuilder:
     def end_state(self) -> 'AppBuilder':
         return self.__app
 
-    @property
     def build(self) -> State:
-        return State(self.__name, actions= [action.build for action in self.__actions])
+        return State(self.__name, actions= [action.build() for action in self.__actions])
 
 
 class TransitionBuilder:
@@ -73,14 +72,14 @@ class TransitionBuilder:
         self.__stateBuilder = stateBuilder
         self.__bricks = bricks
 
-    def when_the_sensor_with_name(self, sensorName: str) -> 'SubConditionBuilder':
+    def when(self, sensorName: str) -> 'SubConditionBuilder':
         condition = ConditionBuilder(self, self.__stateBuilder, self.__bricks)
         subCondition = SubConditionBuilder(sensorName, condition, condition.setCondition)
         self.__condition = condition
         return subCondition
     
-    def build(self, states: list[State]) :
-        condition: Condition = self.__condition.build
+    def build(self, bricks: list[Brick], states: list[State]) :
+        condition: Condition = self.__condition.build(bricks)
         
         originState = next((state for state in states if state.name == self.__originStateName),None)
         nextState = next((state for state in states if state.name == self.__nextStateName),None)

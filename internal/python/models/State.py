@@ -6,9 +6,9 @@ class State(NamedElement):
         super().__init__(name)
         
         if (transitions == None) :
-            self.transitions = []
+            self.transitions : list['Transition'] = []
         else :
-            self.transitions = transitions
+            self.transitions : list['Transition'] = transitions
             
         if (actions == None) :
             self.actions = []
@@ -25,8 +25,10 @@ class State(NamedElement):
         return f"""
 void {self.name}(){{
 {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
+{''.join([transition.generateFlag(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
     
-\twhile(true){{{'\t'.join([str(transition) + "\n\t" for transition in self.transitions]).rstrip()}
+\twhile(true){{{''.join([transition.generateFlagCheck(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
+    {'\t'.join([transition.generateCondition(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
 \t}}
 }}
 """
