@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+../include/arduinoML.hpp
+init.hpp
+../include/init.hpp
+step.hpp
+../include/step.hpp
+state.hpp
+../include/state.hpp
+digitalAction.hpp
+../include/digitalAction.hpp
+digitalCondition.hpp
+../include/digitalCondition.hpp
+
 ../include/digitalAction.hpp
 string
 -
@@ -31,14 +43,6 @@ digitalCondition.hpp
 ../include/digitalCondition.hpp
 
 /home/main/SSE/dali/internal/cpp/src/main.cpp
-init.hpp
-/home/main/SSE/dali/internal/cpp/src/init.hpp
-step.hpp
-/home/main/SSE/dali/internal/cpp/src/step.hpp
-state.hpp
-/home/main/SSE/dali/internal/cpp/src/state.hpp
-digitalAction.hpp
-/home/main/SSE/dali/internal/cpp/src/digitalAction.hpp
-digitalCondition.hpp
-/home/main/SSE/dali/internal/cpp/src/digitalCondition.hpp
+arduinoML.hpp
+/home/main/SSE/dali/internal/cpp/src/arduinoML.hpp
 

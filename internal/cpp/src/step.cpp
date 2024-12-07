@@ -3,10 +3,9 @@
 #include <vector>
 #include "step.hpp"
 
-Step::Step(const int &number){
+Step::Step(){
     _digitalActions;
-    _number = number;
-    std::cout << "void step"<< number <<"() {\n";
+    _digitalConditions;
 };
 
 void Step::addDigitalAction(DigitalAction digitalAction){

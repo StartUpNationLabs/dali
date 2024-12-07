@@ -18,6 +18,7 @@ CMakeFiles/generate.dir/src/init.cpp.o
  ../include/init.hpp
  /home/main/SSE/dali/internal/cpp/src/init.cpp
 CMakeFiles/generate.dir/src/main.cpp.o
+ ../include/arduinoML.hpp
  ../include/digitalAction.hpp
  ../include/digitalCondition.hpp
  ../include/init.hpp

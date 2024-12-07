@@ -10,10 +10,9 @@ class Step {
 private:
     std::vector<DigitalAction> _digitalActions;
     std::vector<DigitalCondition> _digitalConditions;
-    int _number;
 
 public:
-    Step(const int &number);
+    Step();
     void addDigitalAction(DigitalAction digitalAction);
     void addDigitalCondition(DigitalCondition digitalCondition);
     void finish();

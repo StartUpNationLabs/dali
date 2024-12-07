@@ -17,6 +17,7 @@ CMakeFiles/generate.dir/src/digitalCondition.cpp.o: ../src/digitalCondition.cpp
 CMakeFiles/generate.dir/src/init.cpp.o: ../include/init.hpp
 CMakeFiles/generate.dir/src/init.cpp.o: ../src/init.cpp
 
+CMakeFiles/generate.dir/src/main.cpp.o: ../include/arduinoML.hpp
 CMakeFiles/generate.dir/src/main.cpp.o: ../include/digitalAction.hpp
 CMakeFiles/generate.dir/src/main.cpp.o: ../include/digitalCondition.hpp
 CMakeFiles/generate.dir/src/main.cpp.o: ../include/init.hpp

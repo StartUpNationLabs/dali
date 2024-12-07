@@ -1,33 +1,40 @@
-#include "init.hpp"
-#include "step.hpp"
-#include "state.hpp"
-#include "digitalAction.hpp"
-#include "digitalCondition.hpp"
+#include "arduinoML.hpp"
 
-int main() {
-    Init init;
-    init.sensor(12);
-    init.device(9);
-    init.endInit();
 
-    Step step(0);
-    DigitalAction action1(9, State::ON);
-    DigitalAction action3(7, State::OFF);
-    DigitalCondition condition1(12, State::ON, 1);
+INIT
+SENSOR(12)
+DEVICE(9)
+END_INIT
 
-    step.addDigitalAction(action1);
-    step.addDigitalAction(action3);
-    step.addDigitalCondition(condition1);
-    step.finish();
 
-    Step step2(1);
-    DigitalAction action2(9, State::OFF);
-    DigitalCondition condition2(12, State::OFF, 0);
-    DigitalCondition condition3(11, State::ON, 0);
-    step2.addDigitalAction(action2);
-    step2.addDigitalCondition(condition2);
-    step2.addDigitalCondition(condition3);
-    step2.finish();
-    
-    return 0;
-}
+ACTION(1, 9, ON)
+ACTION(2, 7, OFF)
+ACTION(3, 9, OFF)
+
+CONDITION(1, 12, ON, 1)
+CONDITION(2, 12, OFF, 0)
+CONDITION(3, 11, ON, 0)
+
+
+STEP(1)
+
+ADD_CONDITION(1, 1)
+ADD_ACTION(1, 1)
+ADD_ACTION(1, 2)
+
+END_STEP(1)
+
+
+
+STEP(2)
+
+ADD_ACTION(2, 3)
+ADD_CONDITION(2, 2)
+ADD_CONDITION(2, 3)
+
+END_STEP(2)
+
+
+
+
+END
