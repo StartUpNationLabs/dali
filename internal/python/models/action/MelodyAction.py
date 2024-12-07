@@ -8,7 +8,9 @@ class MelodyAction(Action):
         self.frequency = frequency
         self.duration = duration
     
-    def __str__(self) -> str :        
-        return f"""\ttone({self.actuator.pin}, {self.frequency}{', '+str(self.duration) if self.duration is not None else ''});
+    def __str__(self) -> str :
+        if (self.duration is None):
+            return f"analogWrite({self.actuator.pin}, {self.frequency})"        
+        return f"""\ttone({self.actuator.pin}, {self.frequency}, {self.duration});
 \tdelay({self.duration});
 """

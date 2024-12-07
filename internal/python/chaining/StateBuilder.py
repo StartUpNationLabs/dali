@@ -4,6 +4,7 @@ from typing import Self
 from chaining.ActionBuilder import MelodyActionBuilder, DigitalActionBuilder, ActionBuilder
 from chaining.AppBuilder import *
 from chaining.ConditionBuilder import ConditionBuilder, SubConditionBuilder
+from dto import ConstantConditionDto
 
 class StateBuilder:
     def __init__(self, stateName: str, bricks: list['BrickBuilder'], app: 'AppBuilder'):
@@ -77,6 +78,11 @@ class TransitionBuilder:
         subCondition = SubConditionBuilder(sensorName, condition, condition.setCondition)
         self.__condition = condition
         return subCondition
+    
+    @property
+    def when_actions_are_finished(self) -> StateBuilder:
+        self.__condition = ConstantConditionDto(Signal.HIGH)
+        return self.__stateBuilder
     
     def build(self, bricks: list[Brick], states: list[State]) :
         condition: Condition = self.__condition.build(bricks)

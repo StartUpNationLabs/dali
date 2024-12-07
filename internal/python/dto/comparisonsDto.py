@@ -10,6 +10,13 @@ class BaseComparisonDto():
     def build(self, bricks: list[Sensor]) -> Condition:
         pass
 
+class ConstantConditionDto():
+    def __init__(self, value: Signal):
+        self.__value = value
+    
+    def build(self, bricks: list[Sensor]) -> ConstantCondition :
+        return ConstantCondition(self.__value)
+
 class SimpleComparisonDto(BaseComparisonDto):
     def __init__(self, sensorName: str, value: Signal):
         self.sensorName = sensorName

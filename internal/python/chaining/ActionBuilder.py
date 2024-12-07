@@ -20,8 +20,8 @@ class DigitalActionBuilder(ActionBuilder):
 
 class MelodyActionBuilder(ActionBuilder):
     def __init__(self, actuator: 'AppModule.BrickBuilder', frequency: int, stateBuilder: 'StateModule.StateBuilder') :
-        if (frequency < 31 or frequency > 65535):
-            raise InvalidOperation(f"The given frequency of {frequency} for the actuator named {self.__actuator.name} is not between 31 and 65 535.")
+        if (frequency < 0 or frequency > 65535):
+            raise InvalidOperation(f"The given frequency of {frequency} for the actuator named {self.__actuator.name} is not between 0 and 65 535.")
         
         self.__actuator = actuator
         self.__frequency = frequency
