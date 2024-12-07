@@ -8,7 +8,7 @@ class MelodyAction(Action):
         self.frequency = frequency
         self.duration = duration
     
-    def __str__(self) -> str :
-        return f"""\ttone({self.actuator.name}, {self.frequency}, {self.duration});
+    def __str__(self) -> str :        
+        return f"""\ttone({self.actuator.name}, {self.frequency}{', '+str(self.duration) if self.duration is not None else ''});
 \tdelay({self.duration});
 """

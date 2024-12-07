@@ -9,11 +9,5 @@ class LogicalOperator(Condition):
         self.right = right
         self.operator = operator
     
-    def evaluate(self):
-        if (self.operator is Operator.AND) :
-            return (self.left is Signal.HIGH) and (self.right is Signal.HIGH)
-        else :
-            return (self.left is Signal.HIGH) or (self.right is Signal.HIGH)
-    
     def __str__(self) -> str :
         return f'{str(self.left)} {self.operator.value} {str(self.right)}'

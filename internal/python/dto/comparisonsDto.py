@@ -1,5 +1,5 @@
-from python.models import *
-from python.chaining.Exceptions import InvalidOperation
+from models import *
+from exceptions.Exceptions import InvalidOperation
 from abc import ABCMeta, abstractmethod
 
 class BaseComparisonDto():

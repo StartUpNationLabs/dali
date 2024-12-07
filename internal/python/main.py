@@ -1,27 +1,21 @@
-from models import *
+from chaining import create_app_with_name
 
-if __name__ == '__main__' :
-    button = Sensor("button", 0)
-    led = DigitalActuator("led",1)
-    buzzer = Buzzer("buzzer",2)
-    
-    ledOn = DigitalAction(led, Signal.HIGH)
-    buzzerPlay = MelodyAction(buzzer,120,5)
-    
-    buttonHigh = EdgeComparison(button, Signal.HIGH, Signal.LOW)
-    
-    conditionFalse = ConstantCondition(Signal.LOW)
-    conditionNot = NotCondition(conditionFalse)
-    conditionAnd = LogicalOperator(buttonHigh, conditionNot, Operator.AND)
-    
-    state2 = State("state2", transitions=[], actions=[buzzerPlay])
-    
-    transition = Transition(state2, conditionFalse)
-    transition2 = Transition(state2, conditionNot)
-    transition3 = Transition(state2, buttonHigh)
-    
-    state = State("state1", transitions=[transition, transition2, transition3], actions=[ledOn])
-    
-    app = App("Test App", state, states=[state,state2], bricks=[button, led, buzzer])
-    
-    print(app)
+(create_app_with_name("testApp")
+    .with_buzzer_with_name("buzzer").on_pin(1)
+    .with_sensor_with_name("button").on_pin(2)
+    .with_digital_actuator_with_name("led").on_pin(3)
+    .with_initial_state_with_name("state1")
+        .add_transition_to("state2")
+            .when_the_sensor_with_name("button").go_from_high_to_low
+                .and_condition("button").have_high_value
+                .end_transition
+            .switch_on_digital_actuator_with_name("led")
+        .end_state
+    .with_state_with_name("state2")
+        .switch_off_digital_actuator_with_name("led")
+        .play_music_with_buzzer_named("buzzer")
+            .at_frequency(32)
+            .during(15)
+            .end_melody
+        .end_state
+    .build)

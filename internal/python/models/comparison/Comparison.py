@@ -7,7 +7,3 @@ class Comparison(Condition):
     def __init__(self, sensor: Sensor):
         __metaclass__ = ABCMeta
         self.sensor = sensor
-    
-    @abstractmethod
-    def evaluate(self) -> Signal :
-        return
