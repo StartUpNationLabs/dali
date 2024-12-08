@@ -26,6 +26,7 @@ class State(NamedElement):
 void {self.name}(){{
 {''.join([str(action) + "\n" for action in self.actions]).rstrip()}
 {''.join([transition.generateFlag(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
+\tdelay(200);
 \twhile(true){{{''.join([transition.generateFlagCheck(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
     {'\t'.join([transition.generateCondition(str(index)) + "\n" for index, transition in enumerate(self.transitions)]).rstrip()}
 \t}}
