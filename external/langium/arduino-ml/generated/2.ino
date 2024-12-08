@@ -13,6 +13,7 @@ void Off() {
     while (true) {
      ;  
     if ((digitalRead(10) == HIGH and digitalRead(12) == HIGH)) {
+      delay(50);
       On();
     }
     }
@@ -23,6 +24,7 @@ void On() {
     while (true) {
      ;  
     if ((digitalRead(10) == LOW or digitalRead(12) == LOW)) {
+      delay(50);
       Off();
     }
     }

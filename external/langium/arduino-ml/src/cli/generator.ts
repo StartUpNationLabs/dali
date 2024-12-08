@@ -74,6 +74,8 @@ export function generateIno(model: App, filePath: string, destination: string | 
 
         state.transitions.forEach(transition => {
             code += `    if (${generateConditionCode(transition.condition)}) {\n`;
+            // add debouncing
+            code += `      delay(50);\n`;
             code += `      ${transition.next.ref?.name}();\n`;
             code += `    }\n`;
         });

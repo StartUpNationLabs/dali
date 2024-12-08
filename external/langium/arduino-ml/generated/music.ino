@@ -15,9 +15,11 @@ void Idle() {
     
     
     if (digitalRead(8) == HIGH) {
+      delay(50);
       Play1();
     }
     if (digitalRead(12) == HIGH) {
+      delay(50);
       Play2();
     }
     }
@@ -71,6 +73,7 @@ void Play1() {
     while (true) {
     
     if (true) {
+      delay(50);
       Idle();
     }
     }
@@ -136,6 +139,7 @@ void Play2() {
     while (true) {
     
     if (true) {
+      delay(50);
       Idle();
     }
     }

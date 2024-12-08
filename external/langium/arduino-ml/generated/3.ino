@@ -16,6 +16,7 @@ void Off() {
     }
 
     if (front136 == true && digitalRead(10) == HIGH) {
+      delay(50);
       On();
     }
     }
@@ -30,6 +31,7 @@ void On() {
     }
 
     if (front211 == true && digitalRead(10) == HIGH) {
+      delay(50);
       Off();
     }
     }

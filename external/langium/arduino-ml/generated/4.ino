@@ -18,6 +18,7 @@ void OffAll() {
     }
 
     if (front190 == true && digitalRead(10) == HIGH) {
+      delay(50);
       OnBuzzer();
     }
     }
@@ -32,6 +33,7 @@ void OnBuzzer() {
     }
 
     if (front290 == true && digitalRead(10) == HIGH) {
+      delay(50);
       OnLed();
     }
     }
@@ -47,6 +49,7 @@ void OnLed() {
     }
 
     if (front403 == true && digitalRead(10) == HIGH) {
+      delay(50);
       OffAll();
     }
     }

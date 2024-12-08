@@ -16,6 +16,7 @@ void Idle() {
     while (true) {
      ;  
     if ((digitalRead(1) == HIGH and digitalRead(2) == LOW)) {
+      delay(50);
       Alert();
     }
     }
@@ -35,9 +36,11 @@ void Alert() {
 
     
     if ((!(digitalRead(1) == HIGH) or front474 == true && digitalRead(2) == HIGH)) {
+      delay(50);
       Idle();
     }
     if (false) {
+      delay(50);
       Standby();
     }
     }
@@ -49,6 +52,7 @@ void Standby() {
     while (true) {
     
     if (true) {
+      delay(50);
       Alert();
     }
     }
