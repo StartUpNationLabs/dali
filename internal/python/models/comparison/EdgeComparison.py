@@ -22,7 +22,4 @@ class EdgeComparison(Comparison):
 \t\t}}"""
 
     def generateCondition(self, offset: str) -> str :
-        return f'(flag{self.sensor.name+str(self.sensor.pin)+offset} == true {Operator.AND.value} digitalRead({self.sensor.pin} == {self.toValue.value})'
-    
-    def __str__(self) -> str :
-        return f'(last{self.sensor.name+str(self.sensor.pin)} == {self.fromValue.value} {Operator.AND.value} (last{self.sensor.name+str(self.sensor.pin)} = digitalRead({self.sensor.pin})) == {self.toValue.value})'
+        return f'(flag{self.sensor.name+str(self.sensor.pin)+offset} == true {Operator.AND.value} digitalRead({self.sensor.pin}) == {self.toValue.value})'
